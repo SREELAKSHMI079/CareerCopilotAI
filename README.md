@@ -1,14 +1,8 @@
 ## Development Status
 
-| Feature | Status |
-|---|---|
-| FastAPI backend | ✅ Completed |
-| User authentication | ✅ Completed |
-| JWT-based authorization | ✅ Completed |
-| Protected API routes | ✅ Completed |
-| Resume upload & processing | 🚧 In Progress |
-| AI-powered resume analysis | ⏳ Planned |
-| Resume-based AI chat | ⏳ Planned |
-| RAG pipeline | ⏳ Planned |
-| React frontend | ⏳ Planned |
-| Docker & deployment | ⏳ Planned |
+![Authentication](https://img.shields.io/badge/Authentication-Complete-brightgreen)
+![Resume Processing](https://img.shields.io/badge/Resume%20Processing-In%20Progress-yellow)
+![AI Analysis](https://img.shields.io/badge/AI%20Analysis-Planned-lightgrey)
+![RAG](https://img.shields.io/badge/RAG-Planned-lightgrey)
+![Frontend](https://img.shields.io/badge/Frontend-Planned-lightgrey)
+![Deployment](https://img.shields.io/badge/Deployment-Planned-lightgrey)

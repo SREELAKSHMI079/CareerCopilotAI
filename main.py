@@ -1,16 +1,19 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, UploadFile, File
+from pypdf import PdfReader
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from database import engine, Base, SessionLocal
 import models
 from schemas import UserCreate
 from schemas import UserLogin
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-
-from models import User 
+import os
+from models import User,Resume
 from auth import (hash_password,verify_password,create_access_token,verify_access_token)
 
 Base.metadata.create_all(bind=engine)
 app=FastAPI()
+UPLOAD_DIR = "uploads"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
@@ -70,3 +73,56 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
         "full_name": existing_user.full_name,
         "email": existing_user.email
     }
+@app.post("/resume/upload")
+def upload_resume(
+    file: UploadFile = File(...),
+    token: str = Depends(oauth2_scheme)
+):
+    email = verify_access_token(token)
+
+    db = SessionLocal()
+
+    existing_user = db.query(User).filter(
+        User.email == email
+    ).first()
+
+    if existing_user is None:
+        raise HTTPException(
+            status_code=401,
+            detail="User not found"
+        )
+    if file.content_type != "application/pdf":
+        raise HTTPException(
+            status_code=400,
+            detail="Only PDF files are allowed"
+    )
+    file_path = os.path.join(
+    UPLOAD_DIR,
+    f"{existing_user.id}_{file.filename}"
+)
+    with open(file_path, "wb") as buffer:
+        buffer.write(file.file.read())
+        reader = PdfReader(file_path)
+        resume_text = ""
+        for page in reader.pages:
+            text = page.extract_text()
+            if text:
+                resume_text += text+"\n"
+        new_resume = Resume(
+            user_id=existing_user.id,
+            filename=file.filename,
+            file_path=file_path,
+            resume_text=resume_text
+        )
+        db.add(new_resume)
+        db.commit()
+        db.refresh(new_resume)
+
+            
+    return {
+        "message": "Resume uploaded successfully",
+        "resume_id": new_resume.id,
+        "filename": new_resume.filename,
+        "text_length": len(resume_text)
+    }
+    

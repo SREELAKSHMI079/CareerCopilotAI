@@ -7,3 +7,6 @@ class UserCreate(BaseModel):
 class UserLogin(BaseModel):
     email:str
     password:str
+
+class ResumeAnalysisRequest(BaseModel):
+    target_role: str

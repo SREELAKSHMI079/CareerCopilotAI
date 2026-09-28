@@ -3,13 +3,12 @@ from pypdf import PdfReader
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from database import engine, Base, SessionLocal
 import models
-from schemas import UserCreate
-from schemas import UserLogin
+from schemas import UserCreate,UserLogin, ResumeAnalysisRequest
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 import os
 from models import User,Resume
 from auth import (hash_password,verify_password,create_access_token,verify_access_token)
-
+from role_skills import ROLE_SKILLS
 Base.metadata.create_all(bind=engine)
 app=FastAPI()
 UPLOAD_DIR = "uploads"
@@ -125,4 +124,65 @@ def upload_resume(
         "filename": new_resume.filename,
         "text_length": len(resume_text)
     }
+
+@app.post("/resume/analyze/{resume_id}")
+def analyze_resume(
+    resume_id: int,
+    request: ResumeAnalysisRequest,
+    token: str = Depends(oauth2_scheme)
+):
+    email = verify_access_token(token)
+
+    db = SessionLocal()
+
+    existing_user = db.query(User).filter(
+        User.email == email
+    ).first()
+
+    if existing_user is None:
+        raise HTTPException(
+            status_code=401,
+            detail="User not found"
+        )
+
+    resume = db.query(models.Resume).filter(models.Resume.id == resume_id,
+        models.Resume.user_id == existing_user.id
+    ).first()
+
+    if resume is None:
+        raise HTTPException(
+            status_code=404,
+            detail="No resume found"
+        )
+    target_role = request.target_role
+    if target_role not in ROLE_SKILLS:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid target role"
+        )
+    required_skills = ROLE_SKILLS[target_role]
+
+    found_skills=[]
+    for skill in required_skills:
+        if skill.lower() in resume.resume_text.lower():
+            found_skills.append(skill)
+    missing_skills = []
+    for skill in required_skills:
+        if skill not in found_skills:
+            missing_skills.append(skill)
+    recommendations = []
+    for skill in missing_skills:
+        recommendations.append(f"Consider learning {skill} to improve your chances for the {target_role} role.")
+
+    return {
+        "resume_id": resume.id,
+        "filename": resume.filename,
+        "text_length": len(resume.resume_text),
+        "target_role": target_role,
+        "required_skills": required_skills,
+        "found_skills": found_skills,
+        "missing_skills": missing_skills,
+        "recommendations": recommendations
+    }
+
     

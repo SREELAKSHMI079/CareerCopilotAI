@@ -1,3 +1,5 @@
+import re
+
 from fastapi import FastAPI, HTTPException, Depends, UploadFile, File
 from pypdf import PdfReader
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -162,9 +164,11 @@ def analyze_resume(
         )
     required_skills = ROLE_SKILLS[target_role]
 
+    resume_text = resume.resume_text.lower()
     found_skills=[]
     for skill in required_skills:
-        if skill.lower() in resume.resume_text.lower():
+        skill_pattern = r"\b" + re.escape(skill.lower()) + r"\b"
+        if re.search(skill_pattern, resume_text):
             found_skills.append(skill)
     missing_skills = []
     for skill in required_skills:

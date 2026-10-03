@@ -11,6 +11,7 @@ import os
 from models import User,Resume
 from auth import (hash_password,verify_password,create_access_token,verify_access_token)
 from role_skills import ROLE_SKILLS
+from ai_service import analyze_resume_with_ai
 Base.metadata.create_all(bind=engine)
 app=FastAPI()
 UPLOAD_DIR = "uploads"
@@ -177,6 +178,10 @@ def analyze_resume(
     recommendations = []
     for skill in missing_skills:
         recommendations.append(f"Consider learning {skill} to improve your chances for the {target_role} role.")
+    ai_analysis = analyze_resume_with_ai(
+    resume.resume_text,
+    target_role
+)
 
     return {
         "resume_id": resume.id,
@@ -186,7 +191,8 @@ def analyze_resume(
         "required_skills": required_skills,
         "found_skills": found_skills,
         "missing_skills": missing_skills,
-        "recommendations": recommendations
+        "recommendations": recommendations,
+        "ai_analysis": ai_analysis
     }
 
     

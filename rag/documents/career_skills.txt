@@ -1,0 +1,146 @@
+PYTHON
+
+Python is a general-purpose programming language widely used in software development, data science, machine learning, automation, and backend development.
+
+Important Python concepts include:
+variables, data types, functions, classes, object-oriented programming, exception handling, modules, packages, file handling, and virtual environments.
+
+For data and AI roles, candidates should also understand NumPy, pandas, APIs, and basic software engineering practices.
+
+
+SQL
+
+SQL is used to store, query, manipulate, and analyze data in relational databases.
+
+Important SQL concepts include:
+SELECT statements, filtering, sorting, joins, GROUP BY, aggregate functions, subqueries, common table expressions, window functions, indexes, and transactions.
+
+For data-related roles, candidates should be comfortable writing queries that combine multiple tables and perform aggregations.
+
+
+MACHINE LEARNING
+
+Machine learning involves building systems that learn patterns from data to make predictions or decisions.
+
+Important concepts include:
+supervised learning, unsupervised learning, feature engineering, model evaluation, cross-validation, overfitting, underfitting, and hyperparameter tuning.
+
+Common machine learning algorithms include:
+linear regression, logistic regression, decision trees, random forests, support vector machines, k-nearest neighbors, and clustering algorithms.
+
+
+DEEP LEARNING
+
+Deep learning uses neural networks with multiple layers to learn complex representations from data.
+
+Important concepts include:
+neural networks, activation functions, backpropagation, loss functions, optimizers, epochs, batches, regularization, and transfer learning.
+
+Common deep learning frameworks include:
+PyTorch and TensorFlow.
+
+
+COMPUTER VISION
+
+Computer vision focuses on enabling computers to understand and process images and video.
+
+Important areas include:
+image classification, object detection, image segmentation, object tracking, image processing, feature extraction, and video analysis.
+
+Common tools include:
+OpenCV, PyTorch, TensorFlow, and YOLO.
+
+
+OPENCV
+
+OpenCV is a computer vision library used for image and video processing.
+
+Important capabilities include:
+image resizing, filtering, thresholding, edge detection, contour detection, image transformations, video processing, and camera input handling.
+
+OpenCV is commonly used together with deep learning models for practical computer vision applications.
+
+
+PYTORCH
+
+PyTorch is a deep learning framework used for developing and training neural networks.
+
+Important concepts include:
+tensors, automatic differentiation, neural network modules, datasets, data loaders, optimizers, training loops, and model evaluation.
+
+PyTorch is widely used for computer vision, natural language processing, and other machine learning applications.
+
+
+TENSORFLOW
+
+TensorFlow is a machine learning and deep learning framework used to build and deploy neural network models.
+
+Important concepts include:
+tensors, computational operations, neural networks, model training, model evaluation, and deployment.
+
+TensorFlow can be used for image classification, computer vision, natural language processing, and other machine learning applications.
+
+
+ETL
+
+ETL stands for Extract, Transform, Load.
+
+The process involves:
+Extracting data from sources, transforming the data into a usable format, and loading the processed data into a target system such as a database or data warehouse.
+
+Important ETL concepts include:
+data cleaning, transformation, validation, data integration, and data quality.
+
+
+DATA PIPELINES
+
+A data pipeline is a sequence of processes that moves and transforms data from one or more sources to a destination.
+
+Typical stages include:
+data ingestion, validation, transformation, processing, storage, and monitoring.
+
+Reliable data pipelines should handle failures, maintain data quality, and be scalable.
+
+
+APACHE SPARK
+
+Apache Spark is a distributed data processing framework designed to process large datasets across multiple machines.
+
+Important Spark concepts include:
+DataFrames, transformations, actions, Spark SQL, distributed computing, partitioning, and PySpark.
+
+PySpark provides Python APIs for working with Apache Spark.
+
+Candidates preparing for data engineering roles should understand how Spark processes large datasets and how to build data processing pipelines.
+
+
+AIRFLOW
+
+Apache Airflow is a platform used to develop, schedule, and monitor workflows.
+
+Airflow workflows are represented as Directed Acyclic Graphs (DAGs).
+
+Important concepts include:
+DAGs, tasks, operators, dependencies, scheduling, retries, and workflow monitoring.
+
+Airflow is commonly used to orchestrate ETL and data engineering pipelines.
+
+
+AWS
+
+Amazon Web Services (AWS) is a cloud computing platform providing infrastructure and managed services.
+
+Important services for data and software roles include:
+S3 for object storage, EC2 for virtual machines, RDS for relational databases, Lambda for serverless computing, and IAM for access management.
+
+Candidates should understand basic cloud concepts such as storage, compute, networking, security, and scalability.
+
+
+DOCKER
+
+Docker is a platform used to package applications and their dependencies into containers.
+
+Important concepts include:
+images, containers, Dockerfiles, volumes, networks, environment variables, and Docker Compose.
+
+Containers help make applications more consistent across development, testing, and deployment environments.

@@ -12,6 +12,7 @@ from models import User,Resume
 from auth import (hash_password,verify_password,create_access_token,verify_access_token)
 from role_skills import ROLE_SKILLS
 from ai_service import analyze_resume_with_ai
+from rag.rag_service import get_skill_guidance
 Base.metadata.create_all(bind=engine)
 app=FastAPI()
 UPLOAD_DIR = "uploads"
@@ -178,6 +179,11 @@ def analyze_resume(
     recommendations = []
     for skill in missing_skills:
         recommendations.append(f"Consider learning {skill} to improve your chances for the {target_role} role.")
+    rag_guidance = {}
+
+    for skill in missing_skills:
+        rag_guidance[skill] = get_skill_guidance(skill)
+
     ai_analysis = analyze_resume_with_ai(
     resume.resume_text,
     target_role
@@ -192,7 +198,8 @@ def analyze_resume(
         "found_skills": found_skills,
         "missing_skills": missing_skills,
         "recommendations": recommendations,
-        "ai_analysis": ai_analysis
+        "ai_analysis": ai_analysis,
+        "rag_guidance": rag_guidance
     }
 
     
